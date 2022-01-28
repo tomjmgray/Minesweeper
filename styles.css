@@ -10,7 +10,7 @@
     --background: white;
     --font: black;
     --banner:rgba(192 192 192);
-    --light: lightgray;
+    /* --light: lightgray; */
 }
 
 body {
@@ -22,7 +22,7 @@ body {
 main {
     width: 100%;
    display: flex;
-   flex-direction: column;
+   flex-direction: row;
 }
 
 body {
@@ -39,7 +39,7 @@ nav {
 }
 
 input, button {
-    background-color: var(--light);
+    background-color: var(--background);
     border: none;
     width: 60px;
     text-align: center;
@@ -73,9 +73,10 @@ input[type=number] {
 }
 
 .square {
-    
+    opacity: 100;
+    z-index: 100;
     border:  1px solid ;
-    border-color: var(--background);
+    border-color: var(--font);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -84,7 +85,7 @@ input[type=number] {
 
 
 .unclicked {
-    background-color: var(--light);
+    background-color: var(--background);
 }
 
 .red {
@@ -99,6 +100,10 @@ input[type=number] {
     fill: var(--font);
 }
 
+.flagIcon {
+    z-index: -100;
+}
+
 .bomb svg {
     fill: var(--font);
     padding: 3px;
@@ -110,3 +115,67 @@ input[type=number] {
     color: var(--background);
 }
 
+.column {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center
+}
+
+#color-picker {
+    position: absolute;
+    right: 20px;
+}
+
+#color-picker button {
+    margin-bottom: 10px; 
+}
+
+#Default {
+    background-color: 'white' !important;
+    color: 'black' !important;
+    border-color: rgba(192 192 192) !important;
+}
+
+#Dark {
+    background-color: #222831 !important;
+    color: #EEEEEE !important;
+    border-color: #393E46 !important;
+}
+
+#Night {
+    background-color: #041C32 !important;
+    color: #ECB365 !important;
+    border-color: #04293A !important;
+}
+
+#Random { 
+    
+  background: linear-gradient(124deg, #ff2400, #e81d1d, #e8b71d, #e3e81d, #1de840, #1ddde8, #2b1de8, #dd00f3, #dd00f3);
+  background-size: 1800% 1800%;
+  
+  -webkit-animation: rainbow 18s ease infinite;
+  -z-animation: rainbow 18s ease infinite;
+  -o-animation: rainbow 18s ease infinite;
+    animation: rainbow 18s ease infinite;}
+  
+  @-webkit-keyframes rainbow {
+      0%{background-position:0% 82%}
+      50%{background-position:100% 19%}
+      100%{background-position:0% 82%}
+  }
+  @-moz-keyframes rainbow {
+      0%{background-position:0% 82%}
+      50%{background-position:100% 19%}
+      100%{background-position:0% 82%}
+  }
+  @-o-keyframes rainbow {
+      0%{background-position:0% 82%}
+      50%{background-position:100% 19%}
+      100%{background-position:0% 82%}
+  }
+  @keyframes rainbow { 
+      0%{background-position:0% 82%}
+      50%{background-position:100% 19%}
+      100%{background-position:0% 82%}
+  }

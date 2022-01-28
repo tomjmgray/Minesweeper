@@ -11,7 +11,7 @@
     <title>Document</title>
 </head>
 <body>
-    <main>
+    <header>
         <nav class="settings">
             <h1>MINESWEEPER</h1>
             
@@ -34,27 +34,33 @@
                     <button class="hidden" id="restart">Restart</button>
                 </div>
 
-                <div class="row" id="color-picker">
-                    <h2>Pick a theme</h2>
-                    <button id="Dark">Dark</button>
-                    <button id="Night">Night</button>
-                </div>
+                
 
             
             
         </nav>
+    </header>
+        
+    <main>
         <div class="board-cont">
             <div class="timer">
                 <span id="min">0</span>:
-                <span id="sec">0</span>:
-                <span id="centSec">0</span>
+                <span id="sec">0</span>
             </div>
             <div id="board">
             
             </div> 
         </div>
-        
+        <div class="column" id="color-picker">
+            <p>Pick a theme</p>
+            <button id="Default">Default</button>
+            <button id="Dark">Dark</button>
+            <button id="Night">Night</button>
+            <button id="Random">Random</button>
+        </div>
     </main>
+  
+        
     
 </body>
 <script defer src="./index.js"></script>

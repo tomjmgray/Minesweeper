@@ -2,8 +2,9 @@ $(document).ready(() => {
   
     let global = [];    
     let checked = [];
+    let doubleCheck = [];
     let intervalVar;
-    let centSec = 0;
+    // let centSec = 0;
     let sec = 0;
     let min = 0;
     let flag = 'Off';
@@ -49,10 +50,9 @@ $(document).ready(() => {
     function start() {
         let bombs = $('#bombs').val();
         let width = $('#width').val();
-        // let height = $('#height').val();
+        
         const board = $('#board')
         
-        // board.attr('style', `width: ${width * 30}px; height: ${width * 30}px; border: solid black 3px;`);
         
         let master = [];
         for (let i = 0; i < width; i++) {
@@ -91,19 +91,18 @@ $(document).ready(() => {
         global = master;
         
         intervalVar = setInterval(()=> {
-            centSec += 1;
-            if (centSec === 100) {
-                centSec -= 100;
-                sec += 1;
-                $('#sec').text(sec);
-            }
+            
+            sec += 1;
+            
             if (sec === 60) {
                 sec -= 60;
                 min += 1;
-                $(`#min`).text(min);
+                
             };
-            $('#centSec').text(centSec)
-        }, 10);
+            $('#sec').text(sec);
+            $(`#min`).text(min);
+            // $('#centSec').text(centSec)
+        }, 1000);
 
         $('#start').addClass('hidden');
         $('#flag').removeClass('hidden');
@@ -156,8 +155,13 @@ $(document).ready(() => {
             return num;
         } else if (purpose === 'reveal') {
             let arr = recur;
-            
-            if (master[i][j] === 0) {
+            let coordsStr = `${i}-${j}`;
+            if (doubleCheck?.includes(coordsStr)) {
+                return arr
+            } else {
+                doubleCheck.push(coordsStr);
+            }
+            if (global[i][j] === 0) {
             checked[i][j] = 1;
             
             if (i > 0) {
@@ -201,18 +205,20 @@ $(document).ready(() => {
                 } 
             }
             arr.forEach(tuple => {
+                /// Checks if its a number, adds to checked
                 if (global[tuple[0]][tuple[1]] !== 0 && global[tuple[0]][tuple[1]] !== 'B' && checked[tuple[0]][tuple[1]] !== 1) {
                     checked[tuple[0]][tuple[1]] = 1;
-                }
-                if (global[tuple[0]][tuple[1]] === 0 && checked[tuple[0]][tuple[1]] !== 1) {
+                } else if ((global[tuple[0]][tuple[1]] === 0) && (checked[tuple[0]][tuple[1]] !== 1)) {
                     checkEdges('B', 'reveal', master, tuple[0], tuple[1], width, arr)
                 }
             })
 
             return arr;
 
-            } else {
+            } else if (master[i][j] !== evaluator) {
                 arr.push([i, j]);
+                return arr
+            } else {
                 return arr
             }
         }
@@ -228,43 +234,55 @@ $(document).ready(() => {
     $('#board').on('click', 'span', (e) => {
         let bombs = $('#bombs').val();
         let width = parseInt($('#width').val(), 10);
-        // let height = $('#height').val();
+        console.log(flagCounter);
         e.preventDefault();
-        let id = $(e.target).attr('id');
-        let coords = id.split('-').reverse();
-        // console.table(global);
-        // console.log(coords);
         
-        let y = parseInt(coords[0], 10);
-        let x = parseInt(coords[1], 10);
-        
-        checked[x][y] = 1;
-        // console.table(checked);
         if (flag === 'On') {
-            if ($(e.target).hasClass('flagged')) {
-                $(e.target).removeClass('flagged').empty()
+             if ($(e.target).hasClass('flagIcon')) {
+                $(e.target).parent().removeClass('flagged')
+                $(e.target).parent().empty()
                 flagCounter -= 1;
-            } else {
-                $(e.target).addClass('flagged').append(flagIcon);
-                flagCounter += 1;
-                let bombCounter = 0;
-                if (flagCounter == bombs) {
-                    for (let i = 0; i < width; i++) {
-                        for (let j = 0; j < width; j++) {
-                            if (global[i][j] === 'B' && $(`#${i}-${j}`).hasClass('flagged')) {
-                                bombCounter += 1;
-                            } 
+            } else if ($(e.target).hasClass('flagged')) {
+                $(e.target).removeClass('flagged')
+                $(e.target).parent().empty()
+                flagCounter -= 1;
+            }else {
+                if ($(e.target).hasClass('unclicked')) {
+                        $(e.target).addClass('flagged').append(flagIcon);
+                    flagCounter += 1;
+                    let bombCounter = 0;
+                    if (flagCounter == bombs) {
+                        for (let i = 0; i < width; i++) {
+                            for (let j = 0; j < width; j++) {
+                                if (global[i][j] === 'B' && $(`#${i}-${j}`).hasClass('flagged')) {
+                                    bombCounter += 1;
+                                } 
+                            }
                         }
+                    };
+                    if (bombCounter === flagCounter) {
+                        clearInterval(intervalVar);
+                        $('.board-cont').prepend(`<h2 id="loser">You win! Your time was ${min} minutes, ${sec}.${centSec} seconds! </h2>`)
                     }
-                };
-                if (bombCounter === flagCounter) {
-                    clearInterval(intervalVar);
-                    $('.board-cont').prepend(`<h2 id="loser">You win! Your time was ${min} minutes, ${sec}.${centSec} seconds! </h2>`)
                 }
+                
             }
             
         } else {
+            let id = $(e.target).attr('id');
+            let coords = id.split('-').reverse();
+            
+            
+
+            let y = parseInt(coords[0], 10);
+            let x = parseInt(coords[1], 10);
+            
+            checked[x][y] = 1;
+            console.table($(e.target));
             if (!$(e.target).hasClass('flagged')) {
+
+                /// Handles clicking a bomb and losing
+
                 if (global[x][y] === 'B') {
                     $(e.target).addClass('red');
                     global.forEach((arr, xI) => {
@@ -280,22 +298,25 @@ $(document).ready(() => {
                     });
                     clearInterval(intervalVar);
                     $('.board-cont').prepend('<h2 id="loser">You LOSE! Good day sir!</h2>')
-                    // $('#restart').removeClass('hidden');
+                    
+                /// Handles clicking a 0
                 } else if (global[x][y] === 0) {
-                    let arr = checkEdges('B', 'reveal', global, x, y, width, []);
+                    checkEdges('B', 'reveal', global, x, y, width, []);
                     checked.forEach((arr, xI) => {
                         arr.forEach((index, yI) => {
-                            if (index === 1) {
+                            if (index === 1 &&  global[xI][yI] !== 'B') {
                                 let string = "#"+xI.toString()+"-"+yI.toString();
                                 $(string).removeClass('unclicked')
                             }
-                            if (global[xI][yI] !== 0) {
+                            if (global[xI][yI] !== 0 && global[xI][yI] !== 'B') {
                                 let string = "#"+xI.toString()+"-"+yI.toString();
                                 $(string).addClass(global[xI][yI]).text(global[xI][yI])
                             }
                         })  
                     })
                 } else {
+
+                /// Adds class for color of Number tiles
                     let className = '';
                     if (global[x][y] === 1) {
                         className = 'color1'
@@ -314,6 +335,7 @@ $(document).ready(() => {
                     } else if (global[x][y] === 8) {
                         className = 'color8'
                     }
+                    
                     $(e.target).addClass().removeClass('unclicked').text(global[x][y]);
                     
                 }
@@ -323,17 +345,24 @@ $(document).ready(() => {
         }  
     })
 
+/// Handles Restart
+
     $('#restart').on('click',  (e)=> {
         centSec = 0;
         sec = 0;
         min = 0;
         $('#board').empty();
         $('#loser').remove();
-       
+        $('#flag').removeClass('on');
+        global.length = 0;
+        checked.length = 0;
+        doubleCheck.length = 0;
+        flagCounter = 0;
+        flag='Off';
         start();
     })
 
-
+/// Handles Modes
 
     $('#easy').on('click', () => {
         $('#width').val(10)
@@ -375,20 +404,49 @@ $(document).ready(() => {
             r.style.setProperty('--background', 'black');
             r.style.setProperty('--font', 'red');
             r.style.setProperty('--banner', 'black');
-            r.style.setProperty('--light', 'black');
+            // r.style.setProperty('--light', 'black');
         
     })
+
+/// Handles Color Picket
 
     $('#color-picker').on('click', 'button', (e) => {
         e.preventDefault();
         let id = $(e.target).attr('id');
         r = document.querySelector(':root')
-        if (id === 'Dark') {
-            r.style.setProperty('--background', 'black');
-            r.style.setProperty('--font', 'rgba(192 192 192)');
-            r.style.setProperty('--banner', 'rgba(50 50 50)');
-        }
+        if (id === 'Default') {
+            r.style.setProperty('--background', 'white');
+            r.style.setProperty('--font', 'black');
+            r.style.setProperty('--banner', 'rgba(192 192 192)');
+        } else if (id === 'Dark') {
+            r.style.setProperty('--background', '#222831');
+            r.style.setProperty('--font', '#EEEEEE');
+            r.style.setProperty('--banner', '#393E46');
+        } else if (id === 'Night') {
+            r.style.setProperty('--background', '#041C32');
+            r.style.setProperty('--font', '#ECB365');
+            r.style.setProperty('--banner', '#04293A');
+        } 
+        else if (id === 'Random') {
+            let colorArr = [];
+
+            let arr = ['0','1','2','3','4','5','6','7',"8","9",'A','B','C','D','E','F']
+            for (let i = 0; i < 3; i++) {
+                let strArr = [];
+                for (let j = 0; j < 6; j++) {
+                    let num = Math.floor(Math.random()*16);
+                    strArr.push(arr[num])
+                };
+                let string = strArr.join('');
+                colorArr.push(string);
+            };
+            r.style.setProperty('--background', `#${colorArr[0]}`);
+            r.style.setProperty('--font', `#${colorArr[1]}`);
+            r.style.setProperty('--banner', `#${colorArr[2]}`);
+        } 
     })
+
+/// Handles Flag Button
 
     $('#flag').on('click', (e) => {
         if (flag === 'Off') {
