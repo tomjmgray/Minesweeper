@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <title>Document</title>
 </head>
@@ -11,14 +14,41 @@
     <main>
         <nav class="settings">
             <h1>MINESWEEPER</h1>
-            <div class="input-box">
-                <label for="width">Width: <input type="number" id="width"></label>
-                <label for="height">Height: <input type="number" id="height"></label>
-                <label for="bombs">Bombs: <input type="number" id="bombs"></label>
-                <button id="start">Start</button>
-            </div>
+            
+                <div class="row">
+                    <label for="width">Width: <input type="number" max="50" min="1" id="width" value="10"></label>
+        
+                    <label for="bombs">Bombs: <input type="number" max="100" min="1" id="bombs" value="10"></label>
+                </div>
+                
+                <div class="btn-holder">
+                    <button id="easy">Easy</button>
+                    <button id="medium">Medium</button>
+                    <button id="hard">Hard</button>
+                    <button id="insane">Insane</button>
+                </div>
+                
+                <div class="btn-holder" id="start-box">
+                    <button id="start">Start</button>
+                    <button class="hidden" id="flag">Flag</button>
+                    <button class="hidden" id="restart">Restart</button>
+                </div>
+
+                <div class="row" id="color-picker">
+                    <h2>Pick a theme</h2>
+                    <button id="Dark">Dark</button>
+                    <button id="Night">Night</button>
+                </div>
+
+            
+            
         </nav>
         <div class="board-cont">
+            <div class="timer">
+                <span id="min">0</span>:
+                <span id="sec">0</span>:
+                <span id="centSec">0</span>
+            </div>
             <div id="board">
             
             </div> 

@@ -1,29 +1,112 @@
+:root {
+    --color1: blue;
+    --color2: green;
+    --color3: red;
+    --color4: red;
+    --color5: red;
+    --color6: red;
+    --color7: red;
+    --color8: red;
+    --background: white;
+    --font: black;
+    --banner:rgba(192 192 192);
+    --light: lightgray;
+}
+
+body {
+    width: 100%;
+    margin: 0;
+    font-family: 'Roboto';
+}
+
+main {
+    width: 100%;
+   display: flex;
+   flex-direction: column;
+}
+
+body {
+    background-color: var(--background);
+    color: var(--font);
+}
+
+nav {
+    background-color: var(--banner);
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+    padding: 15px;
+}
+
+input, button {
+    background-color: var(--light);
+    border: none;
+    width: 60px;
+    text-align: center;
+    border: 2px solid;
+    color: var(--font);
+    border-color: var(--font);
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+  }
+
 .board-cont {
     width: 80vw;
-    height: 80vw; 
+    margin-top: 25px;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    
 }
 
 #board {
     display: flex;
     flex-wrap: wrap;
+    background-color: var(--banner);
+    width: 750px;
+    height: 750px;
+    border: 3px solid;
+    border-color: var(--font);
 }
 
 .square {
-    width: 28px;
-    height: 28px;
-    border: 1px solid black;
+    
+    border:  1px solid ;
+    border-color: var(--background);
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: var(--banner);
 }
 
-.green {
-    background-color: green;
+
+.unclicked {
+    background-color: var(--light);
 }
 
 .red {
-    background-color: red;
+    background-color: var(--color8);
 }
+
+.hidden {
+    display: none;
+}
+
+.flag svg {
+    fill: var(--font);
+}
+
+.bomb svg {
+    fill: var(--font);
+    padding: 3px;
+
+}
+
+.on {
+    background-color: var(--font);
+    color: var(--background);
+}
+
