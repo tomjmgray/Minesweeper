@@ -116,9 +116,9 @@ h1 {
     background-color: var(--background);
 }
 
-.red {
+/* .red {
     background-color: var(--color8);
-}
+} */
 
 .hidden {
     display: none;
