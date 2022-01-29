@@ -13,8 +13,13 @@
     /* --light: lightgray; */
 }
 
+html {
+    width: 100vw;
+    margin: 0;
+    font-family: 'Roboto';
+}
 body {
-    width: 100%;
+    width: 100vw;
     margin: 0;
     font-family: 'Roboto';
 }
@@ -34,8 +39,14 @@ nav {
     background-color: var(--banner);
     display: flex;
     align-items: flex-end;
-    justify-content: space-around;
+    justify-content: space-evenly;
     padding: 15px;
+}
+
+nav div {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
 input, button {
@@ -62,12 +73,29 @@ input[type=number] {
     
 }
 
+header {
+    background-color: var(--banner);
+    display: flex;
+    justify-content: space-between;
+    width: 100vw;
+}
+
+
+
+h1 {
+    margin: 30px 0 5px 30px;;
+}
+
 #board {
     display: flex;
     flex-wrap: wrap;
     background-color: var(--banner);
-    width: 750px;
-    height: 750px;
+    min-width: 300px;
+    min-height: 300px;
+    width: 60vh;
+    height: 60vh;
+    max-width: 540px;
+    max-height: 540px;
     border: 3px solid;
     border-color: var(--font);
 }
@@ -109,6 +137,8 @@ input[type=number] {
     padding: 3px;
 
 }
+
+
 
 .on {
     background-color: var(--font);
@@ -179,3 +209,70 @@ input[type=number] {
       50%{background-position:100% 19%}
       100%{background-position:0% 82%}
   }
+
+
+
+
+@media only screen and (max-width:850px) {
+    header {
+        flex-direction: column;
+    }
+
+    #board {
+        
+        min-width: 300px;
+        min-height: 300px;
+        width: 50vw;
+        height: 50vw;
+        max-width: 540px;
+        max-height: 540px;
+        /* width: 60vh;
+        height: 60vh; */
+        border: 3px solid;
+        border-color: var(--font);
+    }
+}
+
+@media only screen and (max-width:600px) {
+    nav {
+        flex-direction: column;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+    }
+    main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    label {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .input-holder {
+        width: 100%;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        margin-bottom: 20px;;
+    }
+    .btn-holder {
+        width: 100%;
+        display: flex;
+        justify-content: space-evenly;
+    }
+    #color-picker {
+        position: relative !important;
+        right: 0 !important;
+        /* flex-direction: row; */
+        align-items: center;
+    }
+    #color-picker button {
+        margin: 1em 10px;
+    }
+
+    #color-picker div {
+        flex-direction: row;
+    }
+}

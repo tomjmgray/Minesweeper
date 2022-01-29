@@ -12,27 +12,29 @@
 </head>
 <body>
     <header>
-        <nav class="settings">
-            <h1>MINESWEEPER</h1>
-            
-                <div class="row">
-                    <label for="width">Width: <input type="number" max="50" min="1" id="width" value="10"></label>
         
-                    <label for="bombs">Bombs: <input type="number" max="100" min="1" id="bombs" value="10"></label>
-                </div>
+        <h1>MINESWEEPER</h1>
+        <nav class="settings">
+            
+                    <div class="input-holder">
+                    <label for="width">Width: <input type="number" max="50" min="1" id="width" value="10"></label>
+            
+                        <label for="bombs">Bombs: <input type="number" max="100" min="1" id="bombs" value="10"></label>
+                  
+                    </div>
+                        
+                    
+
+                    <div class="btn-holder">
+                        <button id="easy">Easy</button>
+                        <button id="medium">Medium</button>
+                        <button id="hard">Hard</button>
+                        <button id="insane">Insane</button>
+                    </div>
+                    
+                    
+           
                 
-                <div class="btn-holder">
-                    <button id="easy">Easy</button>
-                    <button id="medium">Medium</button>
-                    <button id="hard">Hard</button>
-                    <button id="insane">Insane</button>
-                </div>
-                
-                <div class="btn-holder" id="start-box">
-                    <button id="start">Start</button>
-                    <button class="hidden" id="flag">Flag</button>
-                    <button class="hidden" id="restart">Restart</button>
-                </div>
 
                 
 
@@ -43,23 +45,34 @@
         
     <main>
         <div class="board-cont">
+            <div class="btn-holder" id="start-box">
+                <button id="start">Start</button>
+                <button class="hidden" id="flag">Flag</button>
+                <button class="hidden" id="restart">Restart</button>
+            </div>
             <div class="timer">
                 <span id="min">0</span>:
                 <span id="sec">0</span>
             </div>
+            
             <div id="board">
             
             </div> 
         </div>
         <div class="column" id="color-picker">
             <p>Pick a theme</p>
-            <button id="Default">Default</button>
-            <button id="Dark">Dark</button>
-            <button id="Night">Night</button>
-            <button id="Random">Random</button>
+            <div class="column">
+                <button id="Default">Default</button>
+                <button id="Dark">Dark</button>
+                <button id="Night">Night</button>
+                <button id="Random">Random</button>
+            </div>
+            
         </div>
     </main>
+
   
+    
         
     
 </body>

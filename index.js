@@ -1,5 +1,6 @@
 $(document).ready(() => {
-  
+    let windowWidth = $(window).width();
+    let windowHeight = $(window).height();
     let global = [];    
     let checked = [];
     let doubleCheck = [];
@@ -72,8 +73,21 @@ $(document).ready(() => {
             plantBomb(master, width);
         }
 
+        let squareWidth 
+
+        if (windowWidth < 600) {
+            squareWidth = ((300 / width) - 2).toString();
+        } else if (windowWidth < 850) {
+            squareWidth = ((windowWidth / widht) - 2).toString
+        } else if (windowHeight > 900) {
+            squareWidth = ((900 / width) - 2).toString();
+        } else {
+            squareWidth = (((windowHeight * 0.6) / width) - 2).toString();
+        }
+
+
         
-        let squareWidth = ((750 / width) - 2).toString();
+
         
 
         for (let i = 0; i < width; i++) {
@@ -89,7 +103,8 @@ $(document).ready(() => {
             
         }
         global = master;
-        
+        clearInterval(intervalVar);
+        intervalVar = ''
         intervalVar = setInterval(()=> {
             
             sec += 1;
@@ -262,7 +277,7 @@ $(document).ready(() => {
                     };
                     if (bombCounter === flagCounter) {
                         clearInterval(intervalVar);
-                        $('.board-cont').prepend(`<h2 id="loser">You win! Your time was ${min} minutes, ${sec}.${centSec} seconds! </h2>`)
+                        $('.board-cont').prepend(`<h2 id="loser">You win! Your time was ${min} minutes, ${sec} seconds! </h2>`)
                     }
                 }
                 
@@ -348,7 +363,7 @@ $(document).ready(() => {
 /// Handles Restart
 
     $('#restart').on('click',  (e)=> {
-        centSec = 0;
+        
         sec = 0;
         min = 0;
         $('#board').empty();
