@@ -5,7 +5,7 @@ $(document).ready(() => {
     let checked = [];
     let doubleCheck = [];
     let intervalVar;
-    // let centSec = 0;
+
     let sec = 0;
     let min = 0;
     let flag = 'Off';
