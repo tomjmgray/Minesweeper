@@ -112,7 +112,7 @@ h1 {
 }
 
 footer {
-    position: absolute;
+    position: fixed;
     width: 100%;
     display: inline-flex;
     justify-content: center;
